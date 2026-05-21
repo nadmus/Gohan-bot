@@ -5,10 +5,10 @@
  *      Author: Nadir Mustafa
  */
 
-#include "../02-Gpio/Gpio.h"
+#include "Gpio.h"
 
-Gpio::Gpio(port_t port, uint8_t bit, mode_t mode, direction_t direction, activity_t activity = high):
-Pin(port,bit),mode(m_mode), direction(m_direction), activity(m_activity)
+Gpio::Gpio(port_t port, uint8_t bit, mode_t mode, direction_t direction, activity_t activity):
+Pin(port,bit), m_mode(mode), m_direction(direction), m_activity(activity)
 {
 	SYSCON->SYSAHBCLKCTRL0 |= (1 << 6) | (1 << 8) | (1 << 20);
 	if(m_direction == input){

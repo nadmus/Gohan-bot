@@ -25,17 +25,17 @@ public:
 	typedef enum activity_t 	{low, high} activity_t;
 
 protected:
-	const mode_t m_mode;
+	const mode_t m_mode = pushpull;
 	direction_t m_direction;
-	const activity_t m_activity;
+	const activity_t m_activity = high;
 
 public:
 
-	Gpio(port_t port, uint8_t bit, mode_t mode, direction_t direction, activity_t activity = high);
+	Gpio(port_t port, uint8_t bit, mode_t mode, direction_t direction, activity_t activity);
 	uint8_t SetPin(void) override;
 	uint8_t ClrPin(void) override;
 	uint8_t SetTogglePin(void) override;
-	uint8_t SetToggleDir(void) override
+	uint8_t SetToggleDir(void) ;
 	uint8_t SetDirInputs(void) override;
 	uint8_t SetDirOutputs(void) override;
 	uint8_t SetPinModeOut(void) override;

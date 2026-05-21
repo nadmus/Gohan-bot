@@ -1,0 +1,3 @@
+../src/Hardware/Perifericos/01-Pin/Pin.cpp:10:1:Pin::Pin(port_t, uint8_t)	16	static
+../src/Hardware/Perifericos/01-Pin/Pin.cpp:21:1:Pin::~Pin()	16	static
+../src/Hardware/Perifericos/01-Pin/Pin.cpp:21:1:virtual Pin::~Pin()	16	static

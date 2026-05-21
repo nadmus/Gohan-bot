@@ -22,6 +22,8 @@ uint32_t inicializar_systick(uint32_t t_ms)
 	SYST_CURRENT = 0;
 
 	SYST_CONTROL = SYSTICK_CTRL_ENABLE_Msk | SYSTICK_CTRL_TICKINT_Msk | SYSTICK_CTRL_CLKSOURCE_Msk;
+
+	return 0;
 }
 
 
