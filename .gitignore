@@ -1,0 +1,23 @@
+# Carpetas de build (MCUXpresso / Eclipse)
+Debug/
+Release/
+build/
+
+# Archivos compilados
+*.o
+*.obj
+*.d
+*.su
+*.elf
+*.map
+*.bin
+*.hex
+
+# Config del IDE
+.settings/
+.project
+.cproject
+*.launch
+
+# Logs
+*.log
