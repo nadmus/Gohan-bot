@@ -20,7 +20,7 @@ public:
 	virtual uint8_t SetDirOutputs() = 0;
 	virtual uint8_t SetPinModeOut() = 0;
 	virtual ~Outputs();
-}
+};
 
 
 

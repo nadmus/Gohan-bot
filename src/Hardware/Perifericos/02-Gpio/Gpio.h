@@ -35,7 +35,7 @@ public:
 	uint8_t SetPin(void) override;
 	uint8_t ClrPin(void) override;
 	uint8_t SetTogglePin(void) override;
-	uint8_t SetToggleDir(void) override
+	uint8_t SetToggleDir(void) ;
 	uint8_t SetDirInputs(void) override;
 	uint8_t SetDirOutputs(void) override;
 	uint8_t SetPinModeOut(void) override;
