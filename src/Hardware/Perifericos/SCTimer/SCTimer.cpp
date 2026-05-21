@@ -5,7 +5,7 @@
  *      Author: Nadir Mustafa
  */
 
-#include <SCTimer/SCTimer.h>
+#include "SCTimer.h"
 
 SCTimer::SCTimer() {
 	SYSCON->SYSAHBCLKCTRL0 |= (1 << 8);
@@ -36,13 +36,34 @@ void SCTimer::StopTimer(void){
 	SCT->CTRL |= (1 << 2);
 }
 
-void SCTimer::SetMatch(uint32_t time, channel_t channel){
-	SCT->MATCH[channel] = time;
-	SCT->MATCHREL[channel] = time;
+void SCTimer::SetMatch(uint32_t time, match_t match){
+	SCT->MATCH[match] = time;
+	SCT->MATCHREL[match] = time;
 
-	SCT->EV[channel].STATE = 0xFFFFFFFF;
-	SCT->EV[channel] = (channel << 0) | (1 << 12);
 }
+
+void SCTimer::CreateMatchEvent(match_t match, event_t event){
+
+	SCT->EV[event].STATE = STATE_EVENT_ALL;
+	SCT->EV[event].CTRL = (match << MATCHSEL) | MATCH_ONLY;
+}
+
+void SCTimer::CreateInputEvent(event_t event, edge_t edge){
+	SCT->EV[event].STATE = STATE_EVENT_ALL;
+
+	SCT->EV[event].CTRL = (edge << IOCOND_POS);
+}
+
+void SCTimer::SetOutput(output_t out, event_t event){
+	SCT->OUT[out].SET = (1 << event);
+}
+
+void SCTimer::ClrOutput(output_t out, event_t event){
+	SCT->OUT[out].CLR = (1 << event);
+}
+
+
+
 
 void SCTimer::ConfigSwitchMatrixSCTOut(uint8_t port, uint8_t bit,uint8_t out_number){
 	SYSCON->SYSAHBCLKCTRL0 |= (1 << 7);
