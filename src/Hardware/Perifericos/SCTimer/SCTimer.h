@@ -16,29 +16,38 @@ class SCTimer{
 private:
 	static constexpr uint32_t MATCHSEL = 0;
 	static constexpr uint32_t MATCH_ONLY=(1 << 12);
+	static constexpr uint32_t OUTSEL_POS=5;
+	static constexpr uint32_t IOSEL_POS = 6;
 	static constexpr uint32_t IOCOND_POS=10;
 	static constexpr uint32_t STATE_EVENT_ALL=0xFFFFFFFF;
+	static constexpr uint32_t MAX_EVENTS=8;
+
+	static constexpr uint32_t INPUT_SELECT=(0 << OUTSEL_POS);
+	static constexpr uint32_t OUTPUT_SELECT=(1 << OUTSEL_POS);
+
 
 public:
-	enum input_t {INPUT0=0,INPUT1,INPUT2,INPUT3,INPUT4,INPUT5};
-	enum output_t {OUTPUT0=0,OUTPUT1,OUTPUT2,OUTPUT3,OUTPUT4,OUTPUT5,OUTPUT6,OUTPUT7};
+	enum input_t {INPUT0=0,INPUT1,INPUT2,INPUT3};
+	enum output_t {OUTPUT0=0,OUTPUT1,OUTPUT2,OUTPUT3,OUTPUT4,OUTPUT5,OUTPUT6};
 
 	enum edge_t {LOW=0, RISE, FALL, HIGH};
-	enum Event_type {Input,Output};
+
+	enum EventSource {UNUSED, MATCH, INPUT, OUTPUT};
 
 	typedef enum match_t {MATCH1=0,MATCH2,MATCH3,MATCH4,MATCH5,MATCH6,MATCH7,MATCH8}match_t;
 	typedef enum capture_t {CAPTURE1=0,CAPTURE2,CAPTURE3,CAPTURE4,CAPTURE5,CAPTURE6,CAPTURE7,CAPTURE8}capture_t;
 	typedef enum event_t {EVENT1=0, EVENT2,EVENT3,EVENT4,EVENT5,EVENT6,EVENT7,EVENT8}event_t;
 
 	enum mode_t {match,capture};
-	enum Event_Type {input,output};
+	//enum Event_Type {input,output};
 
 
 
 
 private:
 
-	Event_Type event_type[8];
+	EventyType event_type[8];
+
 
 
 public:
@@ -54,6 +63,8 @@ public:
 
 	void CreateInputEvent(event_t event, edge_t edge);
 	void SetCapture(capture_t capture, event_t event);
+
+	uint32_t ReadCapture(capture_t capture);
 
 	void SetOutput(output_t out, event_t event);
 	void ClrOutput(output_t out, event_t event);
