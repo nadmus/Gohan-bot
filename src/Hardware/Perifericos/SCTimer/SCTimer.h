@@ -34,9 +34,9 @@ public:
 
 	enum EventSource {UNUSED, MATCH, INPUT, OUTPUT};
 
-	typedef enum match_t {MATCH1=0,MATCH2,MATCH3,MATCH4,MATCH5,MATCH6,MATCH7,MATCH8}match_t;
-	typedef enum capture_t {CAPTURE1=0,CAPTURE2,CAPTURE3,CAPTURE4,CAPTURE5,CAPTURE6,CAPTURE7,CAPTURE8}capture_t;
-	typedef enum event_t {EVENT1=0, EVENT2,EVENT3,EVENT4,EVENT5,EVENT6,EVENT7,EVENT8}event_t;
+	typedef enum match_t {MATCH0=0,MATCH1,MATCH2,MATCH3,MATCH4,MATCH5,MATCH6,MATCH7}match_t;
+	typedef enum capture_t {CAPTURE0=0,CAPTURE1,CAPTURE2,CAPTURE3,CAPTURE4,CAPTURE5,CAPTURE6,CAPTURE7}capture_t;
+	typedef enum event_t {EVENT0=0, EVENT1,EVENT2,EVENT3,EVENT4,EVENT5,EVENT6,EVENT7}event_t;
 
 	enum mode_t {match,capture};
 	//enum Event_Type {input,output};
