@@ -68,6 +68,7 @@ uint32_t SCTimer::ReadCapture(capture_t capture)
 
 void SCTimer::CreateMatchEvent(match_t match, event_t event){
 
+
 	if(event_type[event] != EventSource::UNUSED){
 		return;
 	}
@@ -116,7 +117,7 @@ void SCTimer::ClrOutput(output_t out, event_t event){
 void SCTimer::ConfigSwitchMatrixSCTOut(uint8_t port, uint8_t bit,uint8_t out_number){
 	SYSCON->SYSAHBCLKCTRL0 |= (1 << 7);
 
-	uint8_t aux = ~(bit + port * 0x20);	/*	EL REGISTRO POR DEFECTO ESTA EN 0xFF	*/
+	uint8_t aux = (bit + port * 0x20);	/*	EL REGISTRO POR DEFECTO ESTA EN 0xFF	*/
 
 	switch(out_number)
 	{
