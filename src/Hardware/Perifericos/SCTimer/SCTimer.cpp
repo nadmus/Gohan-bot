@@ -44,8 +44,10 @@ void SCTimer::SetMatch(uint32_t time, match_t match){
 
 	SCT->REGMODE &= ~(1 << match); //if regmode bit is 0 act as a match
 
+	this->StopTimer();
 	SCT->MATCH[match] = time;
 	SCT->MATCHREL[match] = time;
+	this->StartTimer();
 
 }
 
@@ -111,13 +113,20 @@ void SCTimer::ClrOutput(output_t out, event_t event){
 	SCT->OUT[out].CLR |= (1 << event);
 }
 
+void SCTimer::COnfigOutput(output_t out){
+	  SCT->OUTPUT &= ~(1 << out);
+
+	  SCT->RES &= ~(0b11 << (out * 2));
+	  SCT->RES |=  (0b10 << (out * 2)); // estado seguro ante conflicto
+}
+
 
 
 
 void SCTimer::ConfigSwitchMatrixSCTOut(uint8_t port, uint8_t bit,uint8_t out_number){
 	SYSCON->SYSAHBCLKCTRL0 |= (1 << 7);
 
-	uint8_t aux = (bit + port * 0x20);	/*	EL REGISTRO POR DEFECTO ESTA EN 0xFF	*/
+	uint8_t aux = ~(bit + port * 0x20);	/*	EL REGISTRO POR DEFECTO ESTA EN 0xFF	*/
 
 	switch(out_number)
 	{

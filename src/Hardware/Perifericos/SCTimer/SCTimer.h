@@ -46,7 +46,7 @@ public:
 
 private:
 
-	EventyType event_type[8];
+	EventSource event_type[8];
 
 
 
@@ -61,13 +61,18 @@ public:
 	void SetMatch(uint32_t ms, match_t match);
 	void CreateMatchEvent(match_t match,event_t event);
 
-	void CreateInputEvent(event_t event, edge_t edge);
+	void CreateInputEvent(input_t input, event_t event, edge_t edge);
 	void SetCapture(capture_t capture, event_t event);
+
+	void CreateOutputEvent(output_t output, event_t event, edge_t edge);
+
 
 	uint32_t ReadCapture(capture_t capture);
 
 	void SetOutput(output_t out, event_t event);
 	void ClrOutput(output_t out, event_t event);
+
+	void COnfigOutput(output_t out);
 
 	void ConfigSwitchMatrixSCTOut(uint8_t port, uint8_t bit,uint8_t out_number);
 

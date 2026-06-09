@@ -19,6 +19,8 @@ private:
 	SCTimer::match_t m_matchDuty;
 	SCTimer::match_t m_matchPeriod;
 
+
+
 	uint32_t m_ton;
 	uint32_t m_toff;
 
@@ -27,14 +29,15 @@ private:
 
 
 public:
-	enum base_t {MILISEG,SEG, MIN}
+	enum base_t {MICROSEG, MILISEG,SEG, MIN};
 
 
-	PWM(SCTimer &m_sct, uint8_t port, uint8_t bit, SCTimer::output_t out, uint32_t t, base_t base);
+
+	PWM(SCTimer &m_sct, port_t port, uint8_t bit, SCTimer::output_t out);
 
 
 	void SetDutyCycle(uint32_t duty);
-	void SetPeriod(uint32_t period);
+	void SetPeriod(base_t base, uint32_t ton, uint32_t toff);
 	void SetTon(base_t base, uint32_t ton);
 	void SeToff(base_t base,uint32_t toff);
 	void SetPeriod(base_t base, uint32_t period);
