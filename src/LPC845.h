@@ -39,7 +39,7 @@
 #define FCLKIN 		(12000000UL)	/**< Frecuencia base, 12 MHz */
 
 /** Frecuencia principal del LPC845*/
-#define FREQ_PRINCIPAL	30000000UL	//En Hz. Puede ser 24 MHz o 48 MHz
+#define FREQ_PRINCIPAL	12000000UL	//En Hz. Puede ser 24 MHz o 48 MHz
 
 /*!
  * @addtogroup SYSCON_Peripheral_Access_Layer SYSCON Peripheral Access Layer
