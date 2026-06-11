@@ -5,10 +5,14 @@
  *      Author: Nadir Mustafa
  */
 
-#include <SCTimer/SCTimer.h>
+#include "SCTimer.h"
 
 SCTimer::SCTimer() {
 	SYSCON->SYSAHBCLKCTRL0 |= (1 << 8);
+
+	for(uint8_t i=0;i<8;i++){
+		event_type[i] = EventSource::UNUSED;
+	}
 }
 
 void SCTimer::setUnify(bool a){
@@ -36,13 +40,78 @@ void SCTimer::StopTimer(void){
 	SCT->CTRL |= (1 << 2);
 }
 
-void SCTimer::SetMatch(uint32_t time, channel_t channel){
-	SCT->MATCH[channel] = time;
-	SCT->MATCHREL[channel] = time;
+void SCTimer::SetMatch(uint32_t time, match_t match){
 
-	SCT->EV[channel].STATE = 0xFFFFFFFF;
-	SCT->EV[channel] = (channel << 0) | (1 << 12);
+	SCT->REGMODE &= ~(1 << match); //if regmode bit is 0 act as a match
+
+	SCT->MATCH[match] = time;
+	SCT->MATCHREL[match] = time;
+
 }
+
+void SCTimer::SetCapture(capture_t capture, event_t event){
+
+	if(event_type[event] == EventSource::UNUSED)
+		return;
+
+	SCT->REGMODE |= (1 << capture);
+
+	SCT->CAPCTRL[capture] = (1 << event);
+}
+
+uint32_t SCTimer::ReadCapture(capture_t capture)
+{
+	return SCT->CAP[capture];
+}
+
+
+
+void SCTimer::CreateMatchEvent(match_t match, event_t event){
+
+	if(event_type[event] != EventSource::UNUSED){
+		return;
+	}
+
+	event_type[event] = EventSource::MATCH;
+
+
+	SCT->EV[event].STATE = STATE_EVENT_ALL;
+	SCT->EV[event].CTRL = (match << MATCHSEL) | MATCH_ONLY;
+}
+
+void SCTimer::CreateInputEvent(input_t input, event_t event, edge_t edge){
+
+	if(event_type[event] != EventSource::UNUSED)
+		return;
+
+	event_type[event] = EventSource::INPUT;
+
+	SCT->EV[event].STATE = STATE_EVENT_ALL;
+
+	SCT->EV[event].CTRL = INPUT_SELECT | (input << IOSEL_POS) | (edge << IOCOND_POS);
+}
+
+void SCTimer::CreateOutputEvent(output_t output, event_t event, edge_t edge){
+	if(event_type[event] != EventSource::UNUSED)
+		return;
+
+	event_type[event] = EventSource::OUTPUT;
+
+	SCT->EV[event].STATE = STATE_EVENT_ALL;
+
+	SCT->EV[event].CTRL = OUTPUT_SELECT | (output << IOSEL_POS) | (edge << IOCOND_POS);
+}
+
+void SCTimer::SetOutput(output_t out, event_t event){
+	SCT->OUT[out].SET |= (1 << event);
+}
+
+void SCTimer::ClrOutput(output_t out, event_t event){
+	SCT->OUT[out].CLR |= (1 << event);
+}
+
+
+
 
 void SCTimer::ConfigSwitchMatrixSCTOut(uint8_t port, uint8_t bit,uint8_t out_number){
 	SYSCON->SYSAHBCLKCTRL0 |= (1 << 7);
