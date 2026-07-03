@@ -1,4 +1,4 @@
-#include "inicializar.h"
+#include "InicializacionInfotronic.h"
 
 //Frecuencia Principal 12MHz
 //servo 500 1500 2500
@@ -10,6 +10,8 @@ int main(){
 	pwm.SetPeriod(PWM::MILISEG, 0, 20);
 	pwm.SetTon(PWM::MICROSEG, 500);
 	pwm.StartPWM();
+
+	LedRojo.SetPin();
 
 	while(1)
 	{

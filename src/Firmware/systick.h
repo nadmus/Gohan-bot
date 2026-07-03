@@ -12,23 +12,18 @@
 #include "tipos.h"
 
 //Systick CONTROL register positions
-#define SYSTICK_CTRL_ENABLE_POS 0UL
-#define SYSTICK_CTRL_TICKINT_POS 1UL
-#define SYSTICK_CTRL_CLKSOURCE_POS 2UL
-#define SYSTICK_CTRL_COUNTFLAG_POS 16UL
+#include "LPC845.h"
 
-//Systick CONTROL register Masks
-#define SYSTICK_CTRL_ENABLE_Msk (1UL<<SYSTICK_CTRL_ENABLE_POS)
-#define SYSTICK_CTRL_TICKINT_Msk (1UL<<SYSTICK_CTRL_TICKINT_POS)
-#define SYSTICK_CTRL_CLKSOURCE_Msk (1UL<<SYSTICK_CTRL_CLKSOURCE_POS)
+using namespace std;
 
+void Instalar_Callback_Systick ( void (*miCallbackSystick) (void) );
+void Inicializar_Systick ();
+void Install_SysTickCallback (void (*MyApp_SysTickCallback)(void));
 
-uint32_t inicializar_systick(uint32_t t_ms);
-
-#if defined(__cplusplus)
-	extern "C"{
-	void SysTick_Handler(void);
-	}
+#if defined  (__cplusplus)
+extern "C" {
+	void SysTick_Handler (void);
+}
 #endif
 
 

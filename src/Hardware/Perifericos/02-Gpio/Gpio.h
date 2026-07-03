@@ -5,43 +5,55 @@
  *      Author: Nadir Mustafa
  */
 
-#ifndef HARDWARE_PERIFERICOS_GPIO_H_
-#define HARDWARE_PERIFERICOS_GPIO_H_
-
-#include "LPC845.h"
 #include "tipos.h"
-#include "Pin.h"
 #include "Inputs.h"
 #include "Outputs.h"
 
+#ifndef MODULOS_GPIOS_GPIO_H_
+#define MODULOS_GPIOS_GPIO_H_
 
-class Gpio: public Pin, public Inputs, public Outputs {
+
+class Gpio : public Inputs, public Outputs {
+
+private:
+	const uint8_t m_port;
+	const uint8_t m_bit;
+	const uint8_t m_mode;
+		  uint8_t m_direction;
+	const uint8_t m_activity;
+	      uint8_t m_error;
 
 public:
 
-	typedef enum direction_t    {input, output} direction_t;
-	enum power_t				{off,on};
-	typedef enum mode_t	{pushpull = 0, opendrain, inactive = 0, pulldown, pullup, repeater} mode_t;
-	typedef enum activity_t 	{low, high} activity_t;
+	enum port_t {PORT0 = 0, PORT1};
+	static constexpr uint8_t MAX_BITS_PORT0 = 31;
+	static constexpr uint8_t MAX_BITS_PORT1 = 9;
+	enum direction_t {INPUT=0, OUTPUT};
+	enum mode_output_t {PUSHPULL = 0, OPENDRAIN};
+	enum mode_input_t {INACTIVE=0, PULLDOWN, PULLUP, REPEATER};
+	enum activity_t {LOW = 0, HIGH};
+	enum error_t {ERROR = 2, OK};
 
-protected:
-	const mode_t m_mode = pushpull;
-	direction_t m_direction;
-	const activity_t m_activity = high;
+	Gpio(port_t port, uint8_t bit, uint8_t mode,
+			direction_t direction, activity_t activity);
 
-public:
+	uint8_t SetPin();
+	uint8_t ClrPin();
+	uint8_t SetTogglePin();
+	uint8_t SetToggleDir();
+	uint8_t SetDirOutputs();
+	uint8_t SetPinModeOut();
+	uint8_t SetDirInputs();
+	uint8_t GetPin() const override;
+	uint8_t SetPinModeIn();
 
-	Gpio(port_t port, uint8_t bit, mode_t mode, direction_t direction, activity_t activity);
-	uint8_t SetPin(void) override;
-	uint8_t ClrPin(void) override;
-	uint8_t SetTogglePin(void) override;
-	uint8_t SetToggleDir(void) ;
-	uint8_t SetDirInputs(void) override;
-	uint8_t SetDirOutputs(void) override;
-	uint8_t SetPinModeOut(void) override;
-	uint8_t SetPinModeIn(void) override;
-	uint8_t GetPin(void) override;
+	// Sobrecarga de operadores
+	Gpio& operator=(bool estado);
+	bool operator==(const Gpio& pin);
+	explicit operator bool() const;
+
+	// Destructor
 	virtual ~Gpio();
 };
 
-#endif /* HARDWARE_PERIFERICOS_GPIO_H_ */
+#endif /* MODULOS_GPIOS_GPIO_H_ */

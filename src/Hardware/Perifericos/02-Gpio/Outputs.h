@@ -13,7 +13,7 @@
 class Outputs
 {
 public:
-	Outputs();
+	Outputs(){};
 	virtual uint8_t SetPin() = 0;
 	virtual uint8_t ClrPin() = 0;
 	virtual uint8_t SetTogglePin() = 0;

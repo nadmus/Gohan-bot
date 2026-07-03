@@ -225,15 +225,16 @@ typedef struct {
 //#define 	STCALIB		SysTick->_STCALIB
 ///** \endcond */
 
-typedef struct{
-	__IO uint32_t SYST_CSR;
-	__IO uint32_t SYST_RVR;
-	__IO uint32_t SYST_CVR;
-	 __I uint32_t SYST_CALIB;
-}Systick_Type;
+typedef struct
+{
+  __IO uint32_t CTRL;     /*!< Offset: 0x000 (R/W)  SysTick Control and Status Register */
+  __IO uint32_t RELOAD;   /*!< Offset: 0x004 (R/W)  SysTick Reload Value Register */
+  __IO uint32_t CURR;     /*!< Offset: 0x008 (R/W)  SysTick Current Value Register */
+  __I  uint32_t CALIB;    /*!< Offset: 0x00C (R/ )  SysTick Calibration Register */
+} SysTick_t;
 
-#define Systick ((Systick_Type*) 0xE000E010UL )
-
+#define SysTick    ( (SysTick_t *) 0xE000E010UL)   /*!< SysTick configuration struct */
+/*
 #define SYST_CONTROL Systick->SYST_CSR
 //	#define ENABLE Systick->bits.ENABLE
 //	#define TICKINT Systick->bits.ENABLE
@@ -242,6 +243,7 @@ typedef struct{
 #define SYST_RELOAD Systick->SYST_RVR
 #define SYST_CURRENT Systick->SYST_CVR
 #define SYST_CALIB Systick->SYST_CALIB
+*/
 
 
 

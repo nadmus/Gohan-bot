@@ -29,7 +29,7 @@ private:
 
 
 public:
-	enum base_t {MICROSEG, MILISEG,SEG, MIN};
+	enum base_t {MICROSEG = 1, MILISEG  = 1000,SEG = 1000000};
 
 
 

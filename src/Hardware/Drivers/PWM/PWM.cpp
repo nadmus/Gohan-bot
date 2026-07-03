@@ -42,17 +42,16 @@ void PWM::SetTon(base_t base, uint32_t t){
 
 	m_ton = t;
 
-	if(base == SEG){
-		m_ton *= 1000000;
-	}
-	if(base == MILISEG){
-		m_ton *= 1000;
-	}
-
-	if(base == MICROSEG){
-
-	}
-
+	switch(base){
+		case MICROSEG:
+				m_ton = t * MICROSEG;
+				break;
+		case MILISEG:
+				m_ton = t * MILISEG;
+				break;
+		case SEG:
+				m_ton = t * SEG;
+		}
 
 	m_sct.SetMatch(m_ton * (FREQ_PRINCIPAL/1000000), SCTimer::MATCH1);
 
@@ -62,16 +61,18 @@ void PWM::SetPeriod(base_t base, uint32_t ton, uint32_t toff){
 	m_ton = ton;
 	m_toff = toff;
 
-	if(base == SEG){
-		m_ton *= 1000000;
-		m_toff*= 1000000;
-	}
-	if(base == MILISEG){
-		m_ton *= 1000;
-		m_toff *= 1000;
-	}
-	if(base == MICROSEG){
-
+	switch(base){
+	case MICROSEG:
+			m_ton = ton * MICROSEG;
+			m_toff = toff * MICROSEG;
+			break;
+	case MILISEG:
+			m_ton = ton * MILISEG;
+			m_toff = toff * MILISEG;
+			break;
+	case SEG:
+			m_ton = ton * SEG;
+			m_toff = toff * SEG;
 	}
 	m_period = ((m_ton+m_toff) * (FREQ_PRINCIPAL/1000000));
 	m_sct.SetMatch(m_period, SCTimer::MATCH0);

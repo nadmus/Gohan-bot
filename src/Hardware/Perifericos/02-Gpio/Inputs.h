@@ -12,9 +12,9 @@
 
 class Inputs{
 public:
-	Inputs();
+	Inputs(){};
 	virtual uint8_t SetDirInputs() = 0;
-	virtual uint8_t GetPin() = 0;
+	virtual uint8_t GetPin() const= 0;
 	virtual uint8_t SetPinModeIn() = 0;
 
 	virtual ~Inputs();
